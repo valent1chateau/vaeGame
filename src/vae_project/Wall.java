@@ -23,6 +23,7 @@ public class Wall {
 		
 		hitBox = new Rectangle (x,y,width, height);
 	}
+	
 	public void draw(Graphics2D gtd) {
 		gtd.setColor(Color.black);
 		gtd.drawRect(x, y, width, height);
@@ -30,6 +31,7 @@ public class Wall {
 		gtd.fillRect(x+1, y+1, width-2, height-2);
 		
 	}
+	
 	public int set(int cameraX){
 		x = startX + cameraX;
 		hitBox.x = x;

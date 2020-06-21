@@ -10,10 +10,11 @@ public class KeyChecker extends KeyAdapter {
 		this.panel = panel;
 	}
 	
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(KeyEvent e) { // Permet de creer une actiion quand une touche est appuyée
 		panel.keyPressed(e);
 	}
-	public void keyReleased(KeyEvent e) {
+	
+	public void keyReleased(KeyEvent e) { //Permet de creer une action quand une touche est relachée
 		panel.keyReleased(e);
 	}
 }

@@ -47,17 +47,17 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 					makeWalls(offset);
 				}
 				
-				player.set();
+				player.set(); // Update de la position du joueur
 				for(Wall wall: walls) wall.set(cameraX);
 				
-				for(int i=0;i<walls.size();i++) { //supprimer murs derrieres le joueur
+				for(int i=0;i<walls.size();i++) { // Supprimer murs à gauche du joueur
 					if(walls.get(i).x < -800) walls.remove(i);
 				}
 				repaint();
 				
 			}
 			
-		},0,12); //temps entre chaque frame
+		},0,17); //temps entre chaque frame
 	}
 	
 	public void reset(){ //Fonction appelee quand le joueur meurt
@@ -68,7 +68,7 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 		player.yspeed = 0;
 		walls.clear();
 		
-		offset=-150; //generer le niveau au debut de la fenêtre
+		offset = -150; //generer le niveau au debut de la fenêtre -- Ne pas spawn au début du patern (24min)
 		makeWalls(offset);
 	}
 	
@@ -144,7 +144,7 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 	}
 
 	
-	
+	// Bind des différents touches
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyChar() == 'q') player.keyLeft = true;
 		if(e.getKeyChar() == 'd') player.keyRight = true;

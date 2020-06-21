@@ -9,14 +9,18 @@ public class Player {
 	GamePanel panel;
 	int x;
 	int y;
+	// Volume du joueur
 	int width;
 	int height;
 	
+	// Velocite du joueur
 	double xspeed;
 	double yspeed;
 	
 	Rectangle hitBox;
 	
+	
+	// Variable sur les touches directionnelles
 	boolean keyLeft;
 	boolean keyRight;
 	boolean keyUp;
@@ -26,39 +30,43 @@ public class Player {
 	
 	public Player(int x,int y,GamePanel panel) {
 		this.panel = panel;
-		this.x = x; //coordonnée x au spawn
-		this.y = y; //coordonnée y au spawn
+		this.x = x; // Coordonnée x au spawn
+		this.y = y; // Coordonnée y au spawn
 		
 		width = 50;
 		height = 100;
 		hitBox = new Rectangle (x,y, width, height);
 	}
 	
-	public void set() { //Fonction appelee a chaque frame du jeu
-		if (keyLeft && keyRight || !keyLeft && !keyRight) xspeed *= 0.8;
-		else if(keyLeft && !keyRight) xspeed --;
-		else if(keyRight && !keyLeft) xspeed ++;
+	public void set() { // Fonction appelee a chaque frame du jeu
+		//if (keyLeft && keyRight || !keyLeft && !keyRight) xspeed *= 0.8; //Si on appuye sur aucune touche ou les deux touches droite et gauche en meme tmeps,
+																		// le personnage ne bouge toujous pas sinon sa vitesse est réduite entre chaque frame
+		//else if(keyLeft && !keyRight) xspeed --; // Mouvement du personnage 
+		//else if(keyRight && !keyLeft) xspeed ++;
 		
-		//vitesse max
+		xspeed = 7;
+		
+		// Vitesse maximale
 		if (xspeed>7) xspeed = 7;
 		if (xspeed<-7) xspeed = -7;
 		
+
 		// anti bug low move
 		if (xspeed > 0 && xspeed < 0.75) xspeed = 0;
 		if (xspeed < 0 && xspeed > -0.75) xspeed = 0;
 		
-		//saut 
+		// Saut 
 		if (keyUp) {
-			hitBox.y ++;//vérifier à quoi ça sert //aucune idée
+			hitBox.y ++; // La hitbox suit le personnage durant son saut
 			for (Wall wall: panel.walls) {
 				if (wall.hitBox.intersects(hitBox)) yspeed = -11;
 			}
 			hitBox.y --;
 		}
 
-		yspeed += 0.5;
+		yspeed += 0.5; // Gravité
 		
-		//collision coord x
+		// Collisions horizontales
 		hitBox.x += xspeed;
 		for(Wall wall:panel.walls) {
 			if(hitBox.intersects(wall.hitBox)) {
@@ -69,9 +77,10 @@ public class Player {
 				xspeed = 0;
 				hitBox.x = x;
 			}
+			
 		}
 		
-		//vertical collision
+		// Collisions verticales
 		hitBox.y += yspeed;
 		for(Wall wall:panel.walls) {
 			if(hitBox.intersects(wall.hitBox)) {
@@ -83,6 +92,7 @@ public class Player {
 			}
 		}
 		
+		// Quand le joueur bouge, sa hitbox bouge avec lui
 		panel.cameraX -= xspeed;
 		y += yspeed;
 		
@@ -91,6 +101,7 @@ public class Player {
 		
 		//respawn condition
 		if(y > 800) panel.reset();
+		if(xspeed==0) panel.reset();
 	}
 	
 	public void draw(Graphics2D gtd) {
