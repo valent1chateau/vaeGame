@@ -77,7 +77,6 @@ public class Player {
 				xspeed = 0;
 				hitBox.x = x;
 			}
-			
 		}
 		
 		// Collisions verticales
@@ -92,6 +91,18 @@ public class Player {
 			}
 		}
 		
+		//Si le joueur marche sur un pic, il perd la partie
+		for(Wall pic:panel.walls) {
+			if(hitBox.intersects(pic.hitBox)) {
+				hitBox.y -= yspeed;
+				while(!pic.hitBox.intersects(hitBox)) hitBox.y += Math.signum(yspeed);
+				hitBox.y -= Math.signum(yspeed);
+				yspeed = 0;
+				y = hitBox.y;
+				panel.reset();
+			}
+		}
+		
 		// Quand le joueur bouge, sa hitbox bouge avec lui
 		panel.cameraX -= xspeed;
 		y += yspeed;
@@ -101,11 +112,11 @@ public class Player {
 		
 		//respawn condition
 		if(y > 800) panel.reset();
-		if(xspeed==0) panel.reset();
+		//if(xspeed==0) panel.reset();
 	}
 	
 	public void draw(Graphics2D gtd) {
-		gtd.setColor(Color.black);
+		gtd.setColor(Color.blue);
 		gtd.fillRect(x, y, width, height);
 	}
 }

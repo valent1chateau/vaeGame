@@ -29,6 +29,9 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 	
 	Font buttonFont = new Font("Arial",Font.BOLD,30);
 	
+	int sw = 100;
+	int sh = 50;
+	
 	public GamePanel() {
 		restartRect = new Rectangle(550,25,50,50);
 		homeRect = new Rectangle(625,25,50,50);
@@ -42,8 +45,8 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 
 			@Override
 			public void run() {
-				if(walls.get(walls.size()-1).x < 800) {
-					offset+=700;
+				if(walls.get(walls.size()-1).x < 1100 /* ATTENTION, VALEUR A CHANGE QUAND ON MODIFIE SW !!!!!!!!!!!! */) {
+					offset+=(1000); // ATTENTION, VALEUR A CHANGE QUAND ON MODIFIE SW !!!!!!!!!!!!
 					makeWalls(offset);
 				}
 				
@@ -73,57 +76,57 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 	}
 	
 	public void makeWalls(int offset) { //Fonction de creation d'obstacles
-		int s = 50; //taille des murs
+		//int s = 50; //taille des murs
+
 		Random rand = new Random();
-		int index = rand.nextInt(5); //retourne un int entre 0 et param-1
+		int index = rand.nextInt(3); //retourne un int entre 0 et param-1
 		
 		if (index == 0) {
-			for (int i = 0; i<14; i++) walls.add(new Wall(offset + i*50,600,s,s));
+			for (int i = 0; i<14; i++) walls.add(new Wall(offset + i*sw,600,sw,sh)); //Creation du sol
 		}
 		else if (index == 1) {
-			for(int i=0;i<5;i++) walls.add(new Wall(offset + i*50,600,s,s));
-			walls.add(new Wall(offset + 500,600,s,s));
-			walls.add(new Wall(offset + 550,600,s,s));
-			walls.add(new Wall(offset + 600,600,s,s));
-			walls.add(new Wall(offset + 650,600,s,s));
-			walls.add(new Wall(offset + 700,600,s,s));
-			walls.add(new Wall(offset + 750,600,s,s));
+			for(int i=0;i<14;i++) walls.add(new Wall(offset + i*sw,600,sw,sh));
+			
+			//Creation des obstacles (pyramide)
+			for(int i=5;i<14;i++) walls.add(new Wall(offset + i*sw,600-sh,sw,sh));
+			for(int i=8;i<11;i++) walls.add(new Wall(offset + i*sw,600-2*sh,sw,sh));
 		}
 		else if (index == 2) {
-			for(int i=0;i<14;i++) walls.add(new Wall(offset+i*50,600,s,s));
-			for(int i=0;i<12;i++) walls.add(new Wall(offset+i*50+50,550,s,s));
-			for(int i=0;i<10;i++) walls.add(new Wall(offset+i*50+100,500,s,s));
-			for(int i=0;i<8;i++) walls.add(new Wall(offset+i*50+150,450,s,s));
-			for(int i=0;i<6;i++) walls.add(new Wall(offset+i*50+200,400,s,s));			
+			//2blocs en hauteurs + trou
+			for(int i=0;i<6;i++) walls.add(new Wall(offset+i*sw,600,sw,sh));
+			for(int i=9;i<14;i++) walls.add(new Wall(offset+i*sw,600,sw,sh));
+			walls.add(new Wall(offset + 4*sw,600-sh,sw,sh));
+			walls.add(new Wall(offset + 5*sw,600-sh,sw,sh));
 		}
-		else if (index == 3) {
-			for(int i=0;i<14;i++) walls.add(new Wall(offset+i*50,600,s,s));
-			for(int i=0;i<14;i++) walls.add(new Wall(offset+i*50+450,600,s,s));
-			walls.add(new Wall(offset+150,550,s,s));
-			walls.add(new Wall(offset+200,550,s,s));
-			walls.add(new Wall(offset+200,500,s,s));
-			walls.add(new Wall(offset+200,450,s,s));
-			walls.add(new Wall(offset+500,550,s,s));
-			walls.add(new Wall(offset+450,500,s,s));
-			walls.add(new Wall(offset+450,550,s,s));
-			walls.add(new Wall(offset+450,450,s,s));
+		/*else if (index == 3) {
+			for(int i=0;i<14;i++) walls.add(new Wall(offset+i*50,600,sw,sh));
+			for(int i=0;i<14;i++) walls.add(new Wall(offset+i*50+450,600,sw,sh));
+			walls.add(new Wall(offset+150,550,sw,sh));
+			walls.add(new Wall(offset+200,550,sw,sh));
+			walls.add(new Wall(offset+200,500,sw,sh));
+			walls.add(new Wall(offset+200,450,sw,sh));
+			walls.add(new Wall(offset+500,550,sw,sh));
+			walls.add(new Wall(offset+450,500,sw,sh));
+			walls.add(new Wall(offset+450,550,sw,sh));
+			walls.add(new Wall(offset+450,450,sw,sh));
 		}
 		else if (index == 4) {
-			for(int i=0;i<5;i++) walls.add(new Wall(offset+i*50,600,s,s));
-			for(int i=0;i<5;i++) walls.add(new Wall(offset+i*50+50,550,s,s));
-			for(int i=0;i<5;i++) walls.add(new Wall(offset+i*50+100,500,s,s));
-			for(int i=0;i<5;i++) walls.add(new Wall(offset+i*50+150,450,s,s));
-			for(int i=0;i<5;i++) walls.add(new Wall(offset+i*50+500,600,s,s));
-		}
+			for(int i=0;i<5;i++) walls.add(new Wall(offset+i*50,600,sw,sh));
+			for(int i=0;i<5;i++) walls.add(new Wall(offset+i*50+50,550,sw,sh));
+			for(int i=0;i<5;i++) walls.add(new Wall(offset+i*50+100,500,sw,sh));
+			for(int i=0;i<5;i++) walls.add(new Wall(offset+i*50+150,450,sw,sh));
+			for(int i=0;i<5;i++) walls.add(new Wall(offset+i*50+500,600,sw,sh));
+		}*/
 	}
 	
 	public void paint(Graphics g) {
 		super.paint(g);
-		
 		Graphics2D gtd = (Graphics2D) g; //cast de Graphics g dans Graphics2D gtd
 		player.draw(gtd);
 		for (Wall wall:walls) wall.draw(gtd);
+		//for (Pic wall:walls) wall.draw_pic(gtd);
 		
+		//Dessin des boutons R et H
 		gtd.setColor(Color.BLACK);
 		gtd.drawRect(550, 25, 50, 50);
 		gtd.drawRect(625, 25, 50, 50);
@@ -134,8 +137,6 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 		gtd.setFont(buttonFont);
 		gtd.drawString("R", 564, 60);
 		gtd.drawString("H", 639, 60);
-		
-		
 	}
 	
 	@Override
