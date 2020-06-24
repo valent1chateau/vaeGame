@@ -2,7 +2,10 @@ package vae_project;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
+
+import javax.swing.ImageIcon;
 
 public class Player {
 	
@@ -26,7 +29,9 @@ public class Player {
 	boolean keyUp;
 	boolean keyDown;
 	
-	
+	ImageIcon iconPlayer;
+	Image imagePlayer;
+
 	
 	public Player(int x,int y,GamePanel panel) {
 		this.panel = panel;
@@ -36,6 +41,9 @@ public class Player {
 		width = 50;
 		height = 100;
 		hitBox = new Rectangle (x,y, width, height);
+		
+		this.iconPlayer= new ImageIcon(getClass().getResource("../picture/run.gif"));
+		this.imagePlayer = this.iconPlayer.getImage();
 	}
 	
 	public void set() { // Fonction appelee a chaque frame du jeu
@@ -117,6 +125,7 @@ public class Player {
 	
 	public void draw(Graphics2D gtd) {
 		gtd.setColor(Color.blue);
-		gtd.fillRect(x, y, width, height);
+		//gtd.fillRect(x, y, width, height);
+		gtd.drawImage(imagePlayer, this.x, this.y, null);
 	}
 }

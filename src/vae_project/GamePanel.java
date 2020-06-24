@@ -29,8 +29,8 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 	
 	Font buttonFont = new Font("Arial",Font.BOLD,30);
 	
-	int sw = 100;
-	int sh = 50;
+	int sw = 90;
+	int sh = 27;
 	
 	public GamePanel() {
 		restartRect = new Rectangle(550,25,50,50);
