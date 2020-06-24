@@ -1,0 +1,2 @@
+INDEX VERSION 1.131+C:\Users\vlt\Desktop\utbm\vaeGame\.metadata\.plugins\org.eclipse.jdt.core
+1111165965.index

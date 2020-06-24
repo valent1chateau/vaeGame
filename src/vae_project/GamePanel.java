@@ -24,43 +24,53 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 	int cameraX; //variable camera
 	int offset;
 	
-	Rectangle restartRect;
-	Rectangle homeRect;
+	private MainMenu menu;
+	private enum STATE {
+		MENU,
+		GAME
+	};
 	
-	Font buttonFont = new Font("Arial",Font.BOLD,30);
+	private STATE State = STATE.MENU;
 	
 	int sw = 100;
 	int sh = 50;
 	
 	public GamePanel() {
-		restartRect = new Rectangle(550,25,50,50);
-		homeRect = new Rectangle(625,25,50,50);
-		
-		player = new Player(400,300,this);
-		
-		reset();		
-		
-		gameTimer = new Timer();
-		gameTimer.schedule(new TimerTask() {
-
-			@Override
-			public void run() {
-				if(walls.get(walls.size()-1).x < 1100 /* ATTENTION, VALEUR A CHANGE QUAND ON MODIFIE SW !!!!!!!!!!!! */) {
-					offset+=(1000); // ATTENTION, VALEUR A CHANGE QUAND ON MODIFIE SW !!!!!!!!!!!!
-					makeWalls(offset);
-				}
-				
-				player.set(); // Update de la position du joueur
-				for(Wall wall: walls) wall.set(cameraX);
-				
-				for(int i=0;i<walls.size();i++) { // Supprimer murs à gauche du joueur
-					if(walls.get(i).x < -800) walls.remove(i);
-				}
-				repaint();
-				
-			}
+		if( State == STATE.GAME) {
 			
-		},0,17); //temps entre chaque frame
+			player = new Player(400,300,this);
+			
+			reset();		
+			
+			gameTimer = new Timer();
+			gameTimer.schedule(new TimerTask() {
+	
+				@Override
+				public void run() {
+					if(walls.get(walls.size()-1).x < 1100 /* ATTENTION, VALEUR A CHANGE QUAND ON MODIFIE SW !!!!!!!!!!!! */) {
+						offset+=(1000); // ATTENTION, VALEUR A CHANGE QUAND ON MODIFIE SW !!!!!!!!!!!!
+						makeWalls(offset);
+					}
+					
+					player.set(); // Update de la position du joueur
+					for(Wall wall: walls) wall.set(cameraX);
+					
+					for(int i=0;i<walls.size();i++) { // Supprimer murs à gauche du joueur
+						if(walls.get(i).x < -800) walls.remove(i);
+					}
+					repaint();
+					
+				}
+				
+			},0,17); //temps entre chaque frame
+		}
+		else if(State == STATE.MENU) {
+			menu = new MainMenu();
+			for (int i = 0; i<14; i++) walls.add(new Wall(offset + i*sw,600,sw,sh)); //Creation du sol
+			player = new Player(50,500,this);
+			player.set();
+			repaint();
+		}
 	}
 	
 	public void reset(){ //Fonction appelee quand le joueur meurt
@@ -125,18 +135,10 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 		player.draw(gtd);
 		for (Wall wall:walls) wall.draw(gtd);
 		//for (Pic wall:walls) wall.draw_pic(gtd);
+		if(State == STATE.MENU) {
+			menu.render(gtd);
+		}
 		
-		//Dessin des boutons R et H
-		gtd.setColor(Color.BLACK);
-		gtd.drawRect(550, 25, 50, 50);
-		gtd.drawRect(625, 25, 50, 50);
-		gtd.setColor(Color.WHITE);
-		gtd.fillRect(551, 26, 48, 48);
-		gtd.fillRect(626, 26, 48, 48);
-		gtd.setColor(Color.BLACK);
-		gtd.setFont(buttonFont);
-		gtd.drawString("R", 564, 60);
-		gtd.drawString("H", 639, 60);
 	}
 	
 	@Override
@@ -151,7 +153,6 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 		if(e.getKeyChar() == 'd') player.keyRight = true;
 		if(e.getKeyChar() == 'z') player.keyUp = true;
 		if(e.getKeyChar() == 's') player.keyDown = true;
-		if(e.getKeyChar() == 'r') reset();
 	}
 
 	public void keyReleased(KeyEvent e) {
@@ -162,7 +163,6 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 	}
 
 	public void mouseClicked(MouseEvent arg0) {
-		if(restartRect.contains(new Point(arg0.getPoint().x, arg0.getPoint().y - 27))) reset();
 	}
 	
 	
