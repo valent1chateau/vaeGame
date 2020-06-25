@@ -39,6 +39,13 @@ public class MouseChecker implements MouseListener{
 				this.panel.first_reset();
 			}
 		}
+		
+		else if(mx>=300 && mx<= 350 && this.panel.State == STATE.GAME) {
+			if(my>=200 && my<= 300) {
+				this.panel.reset();
+			}
+		}
+
 	}
 
 	@Override

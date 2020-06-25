@@ -27,6 +27,7 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 	int offset;
 	
 	private MainMenu menu;
+	private DeathMenu dmenu;
 	
 	public static enum STATE {
 		MENU,
@@ -48,6 +49,7 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 	public GamePanel() {
 		
 		menu = new MainMenu();
+		dmenu = new DeathMenu();
 		for (int i = 0; i<14; i++) walls.add(new Wall(offset + i*sw,600,sw,sh)); //Creation du sol
 		player = new Player(50,500,this);
 		player.set();
@@ -163,14 +165,19 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 		super.paint(g);
 		Graphics2D gtd = (Graphics2D) g; //cast de Graphics g dans Graphics2D gtd
 		player.draw(gtd);
+		
+		if(State == STATE.MENU) {
+			menu.render(gtd);
+		}
+		else if((player.xspeed == 0 || player.y > 800) && State == STATE.GAME) {
+			dmenu.render(gtd);
+		}
 
 		for (Wall wall:walls) wall.draw(gtd); // Dessin des murs
 		for (Pic pic:pics) pic.draw(gtd); // Dessin des pics
 		for (Torche torche:torches) torche.draw(gtd);
 		
-		if(State == STATE.MENU) {
-			menu.render(gtd);
-		}
+		
 	}
 	
 	@Override

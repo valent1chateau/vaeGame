@@ -107,11 +107,9 @@ public class Player {
 				while(!pic.hitBox.intersects(hitBox)) hitBox.y += Math.signum(yspeed);
 				hitBox.y -= Math.signum(yspeed);
 				xspeed = 0;
-				yspeed = 0;
 				y = hitBox.y;
 			}
 		}
-
 		
 		// Quand le joueur bouge, sa hitbox bouge avec lui
 		panel.cameraX -= xspeed;
@@ -121,8 +119,10 @@ public class Player {
 		hitBox.y = y;
 		
 		//respawn condition
-		if(y > 800) panel.reset(); // Le joueur tombe
-		if(xspeed==0) panel.reset(); // Le joueur heurte un mur ou un pic
+		if(y > 800) panel.repaint(); // Le joueur tombe
+		if(xspeed==0) panel.repaint();// Le joueur heurte un mur ou un pic
+		
+		
 		
 	}
 	
