@@ -25,64 +25,59 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 	int offset;
 	
 	private MainMenu menu;
-	private enum STATE {
+	
+	public static enum STATE {
 		MENU,
 		GAME
 	};
 	
-	private STATE State = STATE.MENU;
+	public STATE State = STATE.MENU;
 	
 	int sw = 100;
 	int sh = 50;
 	
 	public GamePanel() {
-		if( State == STATE.GAME) {
-			
-			player = new Player(400,300,this);
-			
-			reset();		
-			
-			gameTimer = new Timer();
-			gameTimer.schedule(new TimerTask() {
-	
-				@Override
-				public void run() {
-					if(walls.get(walls.size()-1).x < 1100 /* ATTENTION, VALEUR A CHANGE QUAND ON MODIFIE SW !!!!!!!!!!!! */) {
-						offset+=(1000); // ATTENTION, VALEUR A CHANGE QUAND ON MODIFIE SW !!!!!!!!!!!!
-						makeWalls(offset);
-					}
-					
-					player.set(); // Update de la position du joueur
-					for(Wall wall: walls) wall.set(cameraX);
-					
-					for(int i=0;i<walls.size();i++) { // Supprimer murs à gauche du joueur
-						if(walls.get(i).x < -800) walls.remove(i);
-					}
-					repaint();
-					
-				}
-				
-			},0,17); //temps entre chaque frame
-		}
-		else if(State == STATE.MENU) {
+		
 			menu = new MainMenu();
 			for (int i = 0; i<14; i++) walls.add(new Wall(offset + i*sw,600,sw,sh)); //Creation du sol
 			player = new Player(50,500,this);
 			player.set();
 			repaint();
-		}
+	}
+	public void first_reset() {
+		gameTimer = new Timer();
+		gameTimer.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				if(walls.get(walls.size()-1).x < 1100 /* ATTENTION, VALEUR A CHANGE QUAND ON MODIFIE SW !!!!!!!!!!!! */) {
+					offset+=(1000); // ATTENTION, VALEUR A CHANGE QUAND ON MODIFIE SW !!!!!!!!!!!!
+					makeWalls(offset);
+				}
+				
+				player.set(); // Update de la position du joueur
+				for(Wall wall: walls) wall.set(cameraX);
+				
+				for(int i=0;i<walls.size();i++) { // Supprimer murs à gauche du joueur
+					if(walls.get(i).x < -800) walls.remove(i);
+				}
+				repaint();
+				
+			}
+			
+		},0,17); //temps entre chaque frame
 	}
 	
 	public void reset(){ //Fonction appelee quand le joueur meurt
-		player.x = 200;
-		player.y = 150;
-		cameraX = 150;
-		player.xspeed = 0;
-		player.yspeed = 0;
-		walls.clear();
-		
-		offset = -150; //generer le niveau au debut de la fenêtre -- Ne pas spawn au début du patern (24min)
-		makeWalls(offset);
+			player.x = 200;
+			player.y = 150;
+			cameraX = 150;
+			player.xspeed = 0;
+			player.yspeed = 0;
+			walls.clear();
+			
+			offset = -150; //generer le niveau au debut de la fenêtre -- Ne pas spawn au début du patern (24min)
+			makeWalls(offset);
 	}
 	
 	public void makeWalls(int offset) { //Fonction de creation d'obstacles
@@ -163,6 +158,7 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 	}
 
 	public void mouseClicked(MouseEvent arg0) {
+		
 	}
 	
 	
