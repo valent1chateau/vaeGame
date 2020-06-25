@@ -68,7 +68,7 @@ public class Player {
 			hitBox.y ++; // La hitbox suit le personnage durant son saut
 			for (Wall wall: panel.walls) {
 				if (wall.hitBox.intersects(hitBox)) yspeed = -11;
-			}
+			}		
 			hitBox.y --;
 		}
 
@@ -99,17 +99,19 @@ public class Player {
 			}
 		}
 		
-		//Si le joueur marche sur un pic, il perd la partie
-		for(Wall pic:panel.walls) {
+		// Collisions pics
+		hitBox.y += yspeed;
+		for(Pic pic:panel.pics) {
 			if(hitBox.intersects(pic.hitBox)) {
 				hitBox.y -= yspeed;
 				while(!pic.hitBox.intersects(hitBox)) hitBox.y += Math.signum(yspeed);
 				hitBox.y -= Math.signum(yspeed);
+				xspeed = 0;
 				yspeed = 0;
 				y = hitBox.y;
-				panel.reset();
 			}
 		}
+
 		
 		// Quand le joueur bouge, sa hitbox bouge avec lui
 		panel.cameraX -= xspeed;
@@ -119,8 +121,9 @@ public class Player {
 		hitBox.y = y;
 		
 		//respawn condition
-		if(y > 800) panel.reset();
-		//if(xspeed==0) panel.reset();
+		if(y > 800) panel.reset(); // Le joueur tombe
+		if(xspeed==0) panel.reset(); // Le joueur heurte un mur ou un pic
+		
 	}
 	
 	public void draw(Graphics2D gtd) {

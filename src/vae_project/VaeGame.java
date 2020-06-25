@@ -21,7 +21,7 @@ public class VaeGame {
 		frame.setTitle("Vae Game");
 		frame.setVisible(true);
 		
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Arrete le programme quand on ferme la fenetre
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Arrete le programme quand on ferme la fenetre
 	}
 
 }
