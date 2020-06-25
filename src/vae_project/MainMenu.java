@@ -24,7 +24,7 @@ public class MainMenu {
 		g.setColor(Color.black);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
 
-		g.drawString("VAE GAME", (int)screenSize.getWidth()/6,100);
+		g.drawString("VAE GAME", 225,100);
 		
 		Font fnt1 = new Font("monospaced", Font.BOLD,30);
 		g.setFont(fnt1);

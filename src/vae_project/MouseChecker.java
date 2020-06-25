@@ -32,19 +32,26 @@ public class MouseChecker implements MouseListener{
 		int mx = e.getX();
 		int my = e.getY();
 		
-		if(mx>=300 && mx<= 350 && this.panel.State == STATE.MENU) {
-			if(my>=200 && my<= 300) {
+		
+		if(mx>= 300 && mx<= 400 && my>=350 && my<=450) {
+			System.exit(0);
+		}
+		
+		else if(mx>=300 && mx<= 400 && this.panel.State == STATE.MENU) {
+			if(my>=200 && my<= 250) {
 				this.panel.State = STATE.GAME;
 				System.out.println("Course lancée");
 				this.panel.first_reset();
 			}
 		}
 		
-		else if(mx>=300 && mx<= 350 && this.panel.State == STATE.GAME) {
-			if(my>=200 && my<= 300) {
+		else if(mx>=300 && mx<= 400 && this.panel.State == STATE.GAME) {
+			if(my>=200 && my<= 250) {
 				this.panel.reset();
 			}
 		}
+		
+			
 
 	}
 

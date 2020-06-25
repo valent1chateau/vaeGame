@@ -19,8 +19,6 @@ public class DeathMenu {
 	public void render(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(Color.black);
-
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); 
 		
 		Font fnt1 = new Font("monospaced", Font.BOLD,30);
 		g.setFont(fnt1);
