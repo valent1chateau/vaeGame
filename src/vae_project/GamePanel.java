@@ -136,8 +136,8 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 			
 			pics.add(new Pic(offset+4*sw,600-sh,swpic,shpic));
 			
-			pics.add(new Pic(offset+16*sw,600,sw,sh));
-			pics.add(new Pic(offset+18*sw,600,sw,sh));
+			pics.add(new Pic(offset+15*sw,600-sh,sw,sh));
+			pics.add(new Pic(offset+18*sw,600-sh,sw,sh));
 		}
 		
 		/*else if (index == 3) {
@@ -188,7 +188,7 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyChar() == 'q') player.keyLeft = true;
 		if(e.getKeyChar() == 'd') player.keyRight = true;
-		if(e.getKeyChar() == 'z') player.keyUp = true;
+		if(e.getKeyChar() == 'z' && player.xspeed>0) player.keyUp = true;
 		if(e.getKeyChar() == 's') player.keyDown = true;
 	}
 

@@ -64,7 +64,7 @@ public class Player {
 		if (xspeed < 0 && xspeed > -0.75) xspeed = 0;
 		
 		// Saut 
-		if (keyUp) {
+		if (keyUp && xspeed > 0) {
 			hitBox.y ++; // La hitbox suit le personnage durant son saut
 			for (Wall wall: panel.walls) {
 				if (wall.hitBox.intersects(hitBox)) yspeed = -11;
