@@ -43,8 +43,8 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 	int swpic = 90; // Longueur
 	int shpic = 27; // Hauteur
 	
-	int swtor = 50;
-	int shtor = 50;
+	int swtor = 90;
+	int shtor = 27;
 	
 	public GamePanel() {
 		
