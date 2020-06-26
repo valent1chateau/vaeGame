@@ -1,11 +1,11 @@
-package vae_project;
+package Model;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Wall {
-	protected int x;
+	private int x;
 	protected int y;
 	protected int width;
 	protected int height;
@@ -16,7 +16,7 @@ public class Wall {
 	static BufferedImage image = new Resource().getResourceImage("../picture/wall.png");
 	
 	public Wall(int x,int y, int width, int height) {
-		this.x = x;
+		this.setX(x);
 		startX = x;
 		this.y = y;
 		this.width = width;
@@ -29,12 +29,20 @@ public class Wall {
 		//gtd.drawRect(x, y, width, height);
 		//gtd.setColor(Color.white);
 		//gtd.fillRect(x+1, y+1, width-2, height-2);
-		gtd.drawImage(image, this.x, this.y, null);
+		gtd.drawImage(image, this.getX(), this.y, null);
 	}
 	
 	public int set(int cameraX){
-		x = startX + cameraX;
-		hitBox.x = x;
+		setX(startX + cameraX);
+		hitBox.x = getX();
+		return getX();
+	}
+
+	public int getX() {
 		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
 	}
 }

@@ -1,4 +1,4 @@
-package vae_project;
+package View;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -15,15 +15,17 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import Model.*;
+
 public class GamePanel extends javax.swing.JPanel implements ActionListener{
 
 	Player player;
-	ArrayList<Wall> walls = new ArrayList<>();
-	ArrayList<Pic> pics = new ArrayList<>();
+	private ArrayList<Wall> walls = new ArrayList<>();
+	private ArrayList<Pic> pics = new ArrayList<>();
 	ArrayList<Torche> torches = new ArrayList<>();
 	Timer gameTimer;
 	
-	int cameraX; //variable camera
+	private int cameraX; //variable camera
 	int offset;
 	
 	private MainMenu menu;
@@ -50,7 +52,7 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 		
 		menu = new MainMenu();
 		dmenu = new DeathMenu();
-		for (int i = 0; i<14; i++) walls.add(new Wall(offset + i*sw,600,sw,sh)); //Creation du sol
+		for (int i = 0; i<14; i++) getWalls().add(new Wall(offset + i*sw,600,sw,sh)); //Creation du sol
 		player = new Player(50,500,this);
 		player.set();
 		repaint();
@@ -61,24 +63,24 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 
 			@Override
 			public void run() {
-				if(walls.get(walls.size()-1).x < 700) {
+				if(getWalls().get(getWalls().size()-1).getX() < 700) {
 					offset+=(21*sw);
 					makeWalls(offset);
 				}
 				
 				player.set(); // Update de la position du joueur
-				for(Wall wall: walls) wall.set(cameraX);
-				for(Pic pic: pics) pic.set(cameraX);
-				for(Torche torche: torches) torche.set(cameraX);
+				for(Wall wall: getWalls()) wall.set(getCameraX());
+				for(Pic pic: getPics()) pic.set(getCameraX());
+				for(Torche torche: torches) torche.set(getCameraX());
 				
-				for(int i=0;i<walls.size();i++) { // Supprimer murs à gauche du joueur
-					if(walls.get(i).x < -800) walls.remove(i);
+				for(int i=0;i<getWalls().size();i++) { // Supprimer murs à gauche du joueur
+					if(getWalls().get(i).getX() < -800) getWalls().remove(i);
 				}
-				for(int i=0;i<pics.size();i++) { // Supprimer murs à gauche du joueur
-					if(pics.get(i).x < -800) pics.remove(i);
+				for(int i=0;i<getPics().size();i++) { // Supprimer murs à gauche du joueur
+					if(getPics().get(i).getX() < -800) getPics().remove(i);
 				}
 				for(int i=0;i<torches.size();i++) { // Supprimer murs à gauche du joueur
-					if(torches.get(i).x < -800) torches.remove(i);
+					if(torches.get(i).getX() < -800) torches.remove(i);
 				}
 				repaint();
 				
@@ -89,13 +91,13 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 	
 	public void reset(){ //Fonction appelee quand le joueur meurt
 		
-		player.x = 200;
-		player.y = 150;
-		cameraX = 150;
-		player.xspeed = 0;
-		player.yspeed = 0;
-		walls.clear();
-		pics.clear();
+		player.setX(200);
+		player.setY(150);
+		setCameraX(150);
+		player.setXspeed(0);
+		player.setYspeed(0);
+		getWalls().clear();
+		getPics().clear();
 		torches.clear();
 		
 		offset = -150; //generer le niveau au debut de la fenêtre -- Ne pas spawn au début du patern (24min)
@@ -108,36 +110,36 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 		int index = rand.nextInt(3); //retourne un int entre 0 et param-1
 		
 		if (index == 0) { // Pas d'obstacle
-			for (int i = 0; i<21; i++) walls.add(new Wall(offset + i*sw,600,sw,sh));
+			for (int i = 0; i<21; i++) getWalls().add(new Wall(offset + i*sw,600,sw,sh));
 		}
 		
 		else if (index == 1) { // Pyramide
-			for(int i=0;i<21;i++) walls.add(new Wall(offset + i*sw,600,sw,sh));
+			for(int i=0;i<21;i++) getWalls().add(new Wall(offset + i*sw,600,sw,sh));
 			
 			torches.add(new Torche(offset+6*sw+(sw-swtor),400, swtor,shtor)); // Torche légerement décalée vers la droite pour le centrage avec la pyramide
 			torches.add(new Torche(offset+12*sw, 400, swtor,shtor));
 			
-			for(int i=5;i<14;i++) walls.add(new Wall(offset + i*sw,600-sh,sw,sh));
+			for(int i=5;i<14;i++) getWalls().add(new Wall(offset + i*sw,600-sh,sw,sh));
 			
-			walls.add(new Wall(offset + 8*sw,600-2*sh,sw,sh));
-			walls.add(new Wall(offset + 10*sw,600-2*sh,sw,sh));
+			getWalls().add(new Wall(offset + 8*sw,600-2*sh,sw,sh));
+			getWalls().add(new Wall(offset + 10*sw,600-2*sh,sw,sh));
 			
-			pics.add(new Pic(offset+9*sw,600-2*sh,sw,sh));
+			getPics().add(new Pic(offset+9*sw,600-2*sh,sw,sh));
 		}
 		
 		else if (index == 2) { // Hauteur et trou puis pics au sol
-			for(int i=0;i<6;i++) walls.add(new Wall(offset+i*sw,600,sw,sh));
-			for(int i=9;i<21;i++) walls.add(new Wall(offset+i*sw,600,sw,sh));
+			for(int i=0;i<6;i++) getWalls().add(new Wall(offset+i*sw,600,sw,sh));
+			for(int i=9;i<21;i++) getWalls().add(new Wall(offset+i*sw,600,sw,sh));
 			
-			walls.add(new Wall(offset + 5*sw,600-sh,sw,sh));	
+			getWalls().add(new Wall(offset + 5*sw,600-sh,sw,sh));	
 			
 			torches.add(new Torche(offset+5*sw+(sw-swtor), 400, swtor,shtor));
 			torches.add(new Torche(offset+9*sw, 400, swtor,shtor));
 			
-			pics.add(new Pic(offset+4*sw,600-sh,swpic,shpic));
+			getPics().add(new Pic(offset+4*sw,600-sh,swpic,shpic));
 			
-			pics.add(new Pic(offset+15*sw,600-sh,sw,sh));
-			pics.add(new Pic(offset+18*sw,600-sh,sw,sh));
+			getPics().add(new Pic(offset+15*sw,600-sh,sw,sh));
+			getPics().add(new Pic(offset+18*sw,600-sh,sw,sh));
 		}
 		
 		/*else if (index == 3) {
@@ -164,19 +166,19 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 	public void paint(Graphics g) {
 		super.paint(g);
 		Graphics2D gtd = (Graphics2D) g; //cast de Graphics g dans Graphics2D gtd
-		player.draw(gtd);
+
+		for (Wall wall:getWalls()) wall.draw(gtd); // Dessin des murs
+		for (Pic pic:getPics()) pic.draw(gtd); // Dessin des pics
+		for (Torche torche:torches) torche.draw(gtd); // Dessin des torches
+		
+		player.draw(gtd); // Dessin du joueur
 		
 		if(State == STATE.MENU) {
-			menu.render(gtd);
+			menu.render(gtd); // Dessin du menu principal
 		}
-		else if((player.xspeed == 0 || player.y > 800) && State == STATE.GAME) {
-			dmenu.render(gtd);
+		else if((player.getXspeed() == 0 || player.getY() > 800) && State == STATE.GAME) {
+			dmenu.render(gtd); // Dessin du menu de mort
 		}
-
-		for (Wall wall:walls) wall.draw(gtd); // Dessin des murs
-		for (Pic pic:pics) pic.draw(gtd); // Dessin des pics
-		for (Torche torche:torches) torche.draw(gtd);
-		
 		
 	}
 	
@@ -186,21 +188,39 @@ public class GamePanel extends javax.swing.JPanel implements ActionListener{
 	
 	// Bind des différents touches
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyChar() == 'q') player.keyLeft = true;
-		if(e.getKeyChar() == 'd') player.keyRight = true;
-		if(e.getKeyChar() == 'z' && player.xspeed>0) player.keyUp = true;
-		if(e.getKeyChar() == 's') player.keyDown = true;
+		if(e.getKeyChar() == 'q') player.setKeyLeft(true);
+		if(e.getKeyChar() == 'd') player.setKeyRight(true);
+		if(e.getKeyChar() == 'z' && player.getXspeed()>0) player.setKeyUp(true);
+		if(e.getKeyChar() == 's') player.setKeyDown(true);
 	}
 
 	public void keyReleased(KeyEvent e) {
-		if(e.getKeyChar() == 'q') player.keyLeft = false;
-		if(e.getKeyChar() == 'd') player.keyRight = false;
-		if(e.getKeyChar() == 'z') player.keyUp = false;
-		if(e.getKeyChar() == 's') player.keyDown = false;
+		if(e.getKeyChar() == 'q') player.setKeyLeft(false);
+		if(e.getKeyChar() == 'd') player.setKeyRight(false);
+		if(e.getKeyChar() == 'z') player.setKeyUp(false);
+		if(e.getKeyChar() == 's') player.setKeyDown(false);
 	}
 
 	public void mouseClicked(MouseEvent arg0) {
 		
+	}
+	public ArrayList<Wall> getWalls() {
+		return walls;
+	}
+	public void setWalls(ArrayList<Wall> walls) {
+		this.walls = walls;
+	}
+	public int getCameraX() {
+		return cameraX;
+	}
+	public void setCameraX(int cameraX) {
+		this.cameraX = cameraX;
+	}
+	public ArrayList<Pic> getPics() {
+		return pics;
+	}
+	public void setPics(ArrayList<Pic> pics) {
+		this.pics = pics;
 	}
 	
 	

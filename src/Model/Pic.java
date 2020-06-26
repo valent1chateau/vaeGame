@@ -1,4 +1,4 @@
-package vae_project;
+package Model;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -15,6 +15,6 @@ public class Pic extends Wall {
 		//gtd.drawRect(this.x, this.y, this.width, this.height);
 		//gtd.setColor(Color.green);
 		//gtd.fillRect(this.x+1, this.y+1, this.width-2, this.height-2);
-		gtd.drawImage(image, this.x, this.y, null);
+		gtd.drawImage(image, this.getX(), this.y, null);
 	}
 }

@@ -1,7 +1,9 @@
-package vae_project;
+package Controller;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import View.GamePanel;
 
 public class KeyChecker extends KeyAdapter {
 	GamePanel panel;

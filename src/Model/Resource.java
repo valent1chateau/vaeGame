@@ -1,4 +1,4 @@
-package vae_project;
+package Model;
 
 import java.awt.image.BufferedImage;
 //import java.io.File;

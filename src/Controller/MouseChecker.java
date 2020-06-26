@@ -1,9 +1,10 @@
-package vae_project;
+package Controller;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import vae_project.GamePanel.STATE;
+import View.GamePanel;
+import View.GamePanel.STATE;
 
 public class MouseChecker implements MouseListener{
 
@@ -28,7 +29,7 @@ public class MouseChecker implements MouseListener{
 		
 	}
 
-	public void mousePressed(MouseEvent e) { // Quand on appuye sur le bouton de notre souris sur le bouton
+	public void mousePressed(MouseEvent e) { // Quand on appuie sur le bouton de notre souris sans le relacher
 		int mx = e.getX();
 		int my = e.getY();
 		

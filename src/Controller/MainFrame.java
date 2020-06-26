@@ -1,6 +1,8 @@
-package vae_project;
+package Controller;
 
 import java.awt.Color;
+
+import View.GamePanel;
 
 public class MainFrame extends javax.swing.JFrame {
 	
